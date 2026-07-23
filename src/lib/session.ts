@@ -47,11 +47,22 @@ export async function getSessionUser(): Promise<SessionUser | null> {
     if (!res.ok) return null;
     const data = (await res.json()) as MeResponse;
     if (!data.userId || !data.email) return null;
+
+    // Identity orgs are optional; the platform workspace name is the source of truth.
+    let workspace = data.organizations?.[0]?.name || undefined;
+    if (!workspace) {
+      const { fetchBillingSummary } = await import('@/lib/citron-api');
+      const billing = await fetchBillingSummary<{
+        workspace?: { name?: string } | null;
+      }>(data.email);
+      workspace = billing?.workspace?.name || undefined;
+    }
+
     return {
       id: data.userId,
       email: data.email,
       name: data.displayName || data.email.split('@')[0] || 'User',
-      workspace: data.organizations?.[0]?.name || undefined,
+      workspace,
     };
   } catch {
     return null;

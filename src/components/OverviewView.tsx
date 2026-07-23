@@ -29,9 +29,19 @@ export function OverviewView() {
 
   const totalCredits = usage ? usage.includedCredits + usage.bonusCredits : 0;
   const remaining = usage ? Math.max(0, totalCredits - usage.usedCredits) : 0;
+  const used = usage?.usedCredits ?? 0;
 
   return (
     <div className="space-y-6">
+      {failed && (
+        <p
+          role="alert"
+          className="rounded-[var(--radius-lg)] border border-[var(--cine-line)] bg-[rgba(220,60,60,0.06)] p-4 text-[0.875rem] text-[var(--color-error)]"
+        >
+          Could not load your workspace usage. Refresh the page or try again in a moment.
+        </p>
+      )}
+
       {usage && (
         <div className="grid gap-4 sm:grid-cols-3">
           <div className="rounded-[var(--radius-xl)] cine-card p-5">
@@ -40,11 +50,14 @@ export function OverviewView() {
             <p className="mt-1 text-[0.75rem] text-cine-faint">{usage.workspace}</p>
           </div>
           <div className="rounded-[var(--radius-xl)] cine-card p-5">
-            <h2 className="text-[0.8125rem] font-medium text-cine-dim">Credits remaining</h2>
+            <h2 className="text-[0.8125rem] font-medium text-cine-dim">Credits</h2>
             <div className="mt-2 text-[1.4rem] font-semibold tracking-[-0.02em] text-cine tabular-nums">
-              {fmt(remaining)}
+              {fmt(used)} <span className="text-[1rem] font-medium text-cine-faint">/ {fmt(totalCredits)}</span>
             </div>
-            <p className="mt-1 text-[0.75rem] text-cine-faint">of {fmt(totalCredits)} this period</p>
+            <p className="mt-1 text-[0.75rem] text-cine-faint">
+              {fmt(remaining)} remaining this period
+              {totalCredits === 0 ? ' · buy a plan to unlock hosted AI credits' : ''}
+            </p>
           </div>
           <div className="rounded-[var(--radius-xl)] cine-card p-5">
             <h2 className="text-[0.8125rem] font-medium text-cine-dim">Local AI actions</h2>

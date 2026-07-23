@@ -25,11 +25,8 @@ export const siteConfig = {
  */
 export function identityUrl(path: 'login' | 'signup', returnTo?: string) {
   const base = `${siteConfig.identity.url}/${path}`;
-  const next = returnTo
-    ? returnTo.startsWith('http')
-      ? returnTo
-      : `${siteConfig.url}${returnTo}`
-    : `${siteConfig.url}/`;
+  const next =
+    !returnTo ? '/' : returnTo.startsWith('http') ? returnTo : returnTo.startsWith('/') ? returnTo : `/${returnTo}`;
   const callback = `${siteConfig.url}/auth/callback?next=${encodeURIComponent(next)}`;
   return `${base}?redirect_uri=${encodeURIComponent(callback)}`;
 }

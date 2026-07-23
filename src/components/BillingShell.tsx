@@ -54,16 +54,26 @@ export function BillingShell({ children }: { children: ReactNode }) {
     );
   }
 
+  const workspaceLabel = user.workspace || `${user.name}'s workspace`;
+
   return (
     <div>
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-[0.8125rem] font-medium text-cine-faint">{user.workspace ?? 'Workspace'}</p>
-          <h1 className="mt-1 text-[1.9rem] font-semibold tracking-[-0.03em] text-cine">
-            {user.name}
+          <p className="text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-cine-faint">
+            Workspace
+          </p>
+          <h1 className="mt-1.5 text-[1.75rem] font-semibold tracking-[-0.03em] text-cine sm:text-[1.9rem]">
+            {workspaceLabel}
           </h1>
+          <p className="mt-1.5 text-[0.875rem] text-cine-dim">
+            Signed in as <span className="font-medium text-cine">{user.email}</span>
+          </p>
         </div>
-        <nav aria-label="Account" className="flex items-center gap-1 rounded-full border border-[var(--cine-line)] bg-[var(--cine-card)] p-1">
+        <nav
+          aria-label="Account"
+          className="flex w-full items-center gap-1 rounded-full border border-[var(--cine-line)] bg-[var(--cine-card)] p-1 sm:w-auto"
+        >
           {TABS.map(({ href, label, icon: Icon }) => {
             const active = pathname === href;
             return (
@@ -72,7 +82,7 @@ export function BillingShell({ children }: { children: ReactNode }) {
                 href={href}
                 aria-current={active ? 'page' : undefined}
                 className={cn(
-                  'inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-[0.8125rem] font-semibold transition-colors',
+                  'inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-full px-3.5 text-[0.8125rem] font-semibold transition-colors sm:flex-none sm:px-4',
                   active ? 'bg-[var(--cine-ink)] text-white' : 'text-cine-dim hover:text-cine'
                 )}
               >
