@@ -1,0 +1,27 @@
+# Stage overlay
+#
+#   docker compose -f docker-compose.prod.yml -f docker-compose.stage.yml -p citron-dashboard-stage up -d --build
+name: citron-dashboard-stage
+
+services:
+  dashboard:
+    build:
+      args:
+        NEXT_PUBLIC_BILLING_URL: ${NEXT_PUBLIC_BILLING_URL:-https://stage.dashboard.citronos.com}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://citronos.com}
+        NEXT_PUBLIC_IDENTITY_URL: ${NEXT_PUBLIC_IDENTITY_URL:-https://stage.identity.citronos.com}
+    # !override avoids merging with prod mappings/aliases
+    ports: !override
+      - "3011:3001"
+    networks: !override
+      default: {}
+      caddy:
+        aliases:
+          - citron-dashboard-stage
+
+networks:
+  default:
+    name: citron-dashboard-stage_default
+  caddy:
+    external: true
+    name: citron-admin-api_default

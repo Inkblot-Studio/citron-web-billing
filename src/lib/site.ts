@@ -2,7 +2,7 @@ export const siteConfig = {
   name: 'Citron',
   tagline: 'Billing & Usage',
   description: 'Manage your Citron subscription, seats, AI credits, usage, and invoices.',
-  url: process.env.NEXT_PUBLIC_BILLING_URL ?? 'https://billing.citronos.com',
+  url: process.env.NEXT_PUBLIC_BILLING_URL ?? 'https://dashboard.citronos.com',
   /** Main marketing/commerce site — pricing, cart, checkout. */
   mainSite: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://citronos.com',
   identity: {

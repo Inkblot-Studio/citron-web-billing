@@ -1,0 +1,41 @@
+# Dashboard UI — production stack (served behind Caddy as dashboard.citronos.com)
+#
+#   docker compose -f docker-compose.prod.yml up -d --build
+name: citron-dashboard-prod
+
+services:
+  dashboard:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_BILLING_URL: ${NEXT_PUBLIC_BILLING_URL:-https://dashboard.citronos.com}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://citronos.com}
+        NEXT_PUBLIC_IDENTITY_URL: ${NEXT_PUBLIC_IDENTITY_URL:-https://identity.citronos.com}
+    environment:
+      PORT: 3001
+      HOSTNAME: 0.0.0.0
+      CITRON_API_URL: ${CITRON_API_URL:?set CITRON_API_URL}
+      CITRON_API_TOKEN: ${CITRON_API_TOKEN:?set CITRON_API_TOKEN}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+      NEXT_PUBLIC_IDENTITY_URL: ${NEXT_PUBLIC_IDENTITY_URL:-https://identity.citronos.com}
+      IDENTITY_API_URL: ${IDENTITY_API_URL:-https://api.identity.citronos.com}
+      SESSION_COOKIE_NAME: ${SESSION_COOKIE_NAME:-citron_session}
+      # Never enable fake session in production
+      DEV_FAKE_SESSION: ""
+    ports:
+      - "${DASHBOARD_PORT:-3010}:3001"
+    networks:
+      default:
+        aliases:
+          - citron-dashboard
+      caddy:
+        aliases:
+          - citron-dashboard
+    restart: unless-stopped
+
+networks:
+  default:
+    name: citron-dashboard-prod_default
+  caddy:
+    external: true
+    name: citron-admin-api_default
