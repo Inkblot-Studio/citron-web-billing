@@ -19,12 +19,19 @@ export const siteConfig = {
   },
 } as const;
 
-/** URL into the identity portal, with a return destination on this subdomain. */
+/**
+ * URL into the identity portal. Always returns via `/auth/callback` so we can
+ * mint the shared `.citronos.com` session cookie from the `#token=` fragment.
+ */
 export function identityUrl(path: 'login' | 'signup', returnTo?: string) {
   const base = `${siteConfig.identity.url}/${path}`;
-  if (!returnTo) return base;
-  const dest = returnTo.startsWith('http') ? returnTo : `${siteConfig.url}${returnTo}`;
-  return `${base}?redirect_uri=${encodeURIComponent(dest)}`;
+  const next = returnTo
+    ? returnTo.startsWith('http')
+      ? returnTo
+      : `${siteConfig.url}${returnTo}`
+    : `${siteConfig.url}/`;
+  const callback = `${siteConfig.url}/auth/callback?next=${encodeURIComponent(next)}`;
+  return `${base}?redirect_uri=${encodeURIComponent(callback)}`;
 }
 
 /** Absolute URL to a page on the main marketing site. */

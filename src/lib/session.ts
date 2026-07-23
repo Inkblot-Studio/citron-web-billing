@@ -2,11 +2,10 @@ import 'server-only';
 import { cookies } from 'next/headers';
 
 /**
- * Session contract with identity.citronos.com — identical to citron-web.
+ * Session contract with identity.citronos.com.
  *
- * Identity sets a session cookie on the parent domain (`.citronos.com`), so
- * every subdomain — including this billing app — receives it. We never parse
- * the cookie ourselves; we forward it to the identity API for validation.
+ * After login, `/auth/callback` stores the Identity JWT in an HttpOnly cookie
+ * on `.citronos.com`. We validate it via `GET /api/auth/me` (Bearer).
  *
  * Local dev without identity: set DEV_FAKE_SESSION=1 to get a stub user.
  */
@@ -23,6 +22,13 @@ const DEV_USER: SessionUser = {
   workspace: 'Citron Preview Workspace',
 };
 
+type MeResponse = {
+  userId?: string;
+  email?: string | null;
+  displayName?: string | null;
+  organizations?: Array<{ name?: string }>;
+};
+
 export async function getSessionUser(): Promise<SessionUser | null> {
   if (process.env.DEV_FAKE_SESSION === '1') return DEV_USER;
 
@@ -34,13 +40,19 @@ export async function getSessionUser(): Promise<SessionUser | null> {
   if (!identityApi) return null;
 
   try {
-    const res = await fetch(`${identityApi.replace(/\/$/, '')}/api/session`, {
-      headers: { cookie: `${COOKIE_NAME}=${token}` },
+    const res = await fetch(`${identityApi.replace(/\/$/, '')}/api/auth/me`, {
+      headers: { Authorization: `Bearer ${token}` },
       cache: 'no-store',
     });
     if (!res.ok) return null;
-    const data = (await res.json()) as { user?: SessionUser };
-    return data.user ?? null;
+    const data = (await res.json()) as MeResponse;
+    if (!data.userId || !data.email) return null;
+    return {
+      id: data.userId,
+      email: data.email,
+      name: data.displayName || data.email.split('@')[0] || 'User',
+      workspace: data.organizations?.[0]?.name || undefined,
+    };
   } catch {
     return null;
   }
