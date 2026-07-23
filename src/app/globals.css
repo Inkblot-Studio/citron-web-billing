@@ -1,0 +1,382 @@
+@import '@citron-systems/citron-ds/fonts';
+@import '@citron-systems/citron-ds/css';
+@import 'tailwindcss';
+
+/* ============================================================
+   CITRON — Design tokens (Inkblot Studio design system v2)
+   Warm ink, luminous citron, engineered typography.
+   ============================================================ */
+
+@theme {
+  /* ---- Fonts (citron-ds v2) ---- */
+  --font-sans: var(--inkblot-typography-font-family-sans);
+  --font-mono: var(--inkblot-typography-font-family-mono);
+  --font-display: var(--inkblot-typography-font-family-display);
+
+  /* ---- Warm neutrals ---- */
+  --color-ink-white: var(--inkblot-color-neutral-white);
+  --color-ink-50: var(--inkblot-color-neutral-gray-50);
+  --color-ink-100: var(--inkblot-color-neutral-gray-100);
+  --color-ink-200: var(--inkblot-color-neutral-gray-200);
+  --color-ink-300: var(--inkblot-color-neutral-gray-300);
+  --color-ink-400: var(--inkblot-color-neutral-gray-400);
+  --color-ink-500: var(--inkblot-color-neutral-gray-500);
+  --color-ink-600: var(--inkblot-color-neutral-gray-600);
+  --color-ink-700: var(--inkblot-color-neutral-gray-700);
+  --color-ink-800: var(--inkblot-color-neutral-gray-800);
+  --color-ink-900: var(--inkblot-color-neutral-gray-900);
+  --color-ink-950: var(--inkblot-color-neutral-gray-950);
+
+  /* ---- Citron accent ---- */
+  --color-citron-50: var(--inkblot-color-accent-citron-50);
+  --color-citron-100: var(--inkblot-color-accent-citron-100);
+  --color-citron-200: var(--inkblot-color-accent-citron-200);
+  --color-citron-300: var(--inkblot-color-accent-citron-300);
+  --color-citron-400: var(--inkblot-color-accent-citron-400);
+  --color-citron-500: var(--inkblot-color-accent-citron-500);
+  --color-citron-600: var(--inkblot-color-accent-citron-600);
+  --color-citron-700: var(--inkblot-color-accent-citron-700);
+  --color-citron-800: var(--inkblot-color-accent-citron-800);
+  --color-citron-900: var(--inkblot-color-accent-citron-900);
+
+  /* ---- Warm dark surfaces ---- */
+  --color-night-950: var(--inkblot-color-neutral-ink);
+  --color-night-900: var(--inkblot-dark-color-background-primary);
+  --color-night-800: var(--inkblot-dark-color-background-secondary);
+  --color-night-700: var(--inkblot-dark-color-background-tertiary);
+  --color-night-600: var(--inkblot-dark-color-border-strong);
+  --color-night-500: var(--inkblot-dark-color-text-tertiary);
+
+  /* ---- Status ---- */
+  --color-success: var(--inkblot-color-semantic-success-main);
+  --color-warning: var(--inkblot-color-semantic-warning-main);
+  --color-error: var(--inkblot-color-semantic-error-main);
+  --color-info: var(--inkblot-color-semantic-info-main);
+
+  /* ---- Radii ---- */
+  --radius-sm: var(--inkblot-radius-sm);
+  --radius-md: var(--inkblot-radius-md);
+  --radius-lg: var(--inkblot-radius-lg);
+  --radius-xl: var(--inkblot-radius-xl);
+  --radius-2xl: var(--inkblot-radius-2xl);
+  --radius-3xl: 32px;
+
+  /* ---- Shadows (warm-tinted, diffused) ---- */
+  --shadow-xs: var(--inkblot-shadow-xs);
+  --shadow-sm: var(--inkblot-shadow-sm);
+  --shadow-md: var(--inkblot-shadow-md);
+  --shadow-lg: var(--inkblot-shadow-lg);
+  --shadow-xl: var(--inkblot-shadow-xl);
+  --shadow-glow: var(--inkblot-shadow-glow);
+
+  /* ---- Easing ---- */
+  --ease-out-expo: var(--inkblot-easing-expressive);
+  --ease-out-soft: var(--inkblot-easing-out);
+  --ease-in-out-soft: var(--inkblot-easing-in-out);
+
+  /* ---- Container ---- */
+  --container-prose: var(--inkblot-grid-max-width-content);
+  --container-page: var(--inkblot-grid-max-width-container);
+  --container-wide: var(--inkblot-grid-max-width-wide);
+}
+
+/* ============================================================
+   Semantic theme — light (default) & dark
+   ============================================================ */
+:root {
+  --bg-primary: var(--inkblot-semantic-color-background-primary);
+  --bg-secondary: var(--inkblot-semantic-color-background-secondary);
+  --bg-tertiary: var(--inkblot-semantic-color-background-tertiary);
+  --bg-inverse: var(--inkblot-semantic-color-background-inverse);
+
+  --text-primary: var(--inkblot-semantic-color-text-primary);
+  --text-secondary: var(--inkblot-semantic-color-text-secondary);
+  --text-tertiary: var(--inkblot-semantic-color-text-tertiary);
+  --text-muted: var(--inkblot-semantic-color-text-tertiary);
+  --text-inverse: var(--inkblot-semantic-color-text-inverse);
+
+  --border-subtle: var(--inkblot-semantic-color-border-default);
+  --border-default: var(--inkblot-semantic-color-border-strong);
+  --border-strong: var(--inkblot-color-neutral-gray-400);
+
+  --surface-card: var(--inkblot-semantic-color-background-secondary);
+  --surface-glass: rgba(255, 255, 255, 0.72);
+  --surface-elevated: var(--inkblot-semantic-color-background-secondary);
+
+  --accent: var(--inkblot-semantic-color-interactive-primary);
+  --accent-hover: var(--inkblot-semantic-color-interactive-primary-hover);
+  --accent-bright: var(--inkblot-color-accent-citron-400);
+  --accent-wash: var(--inkblot-color-accent-citron-50);
+
+  --grid-line: rgba(29, 28, 25, 0.05);
+  --hero-from: var(--inkblot-color-neutral-gray-50);
+  --hero-to: var(--inkblot-color-accent-citron-100);
+
+  /* Cinematic journey tokens — light (default), v2 palette */
+  --cine-bg-0: var(--inkblot-color-neutral-gray-50);
+  --cine-bg-1: var(--inkblot-color-neutral-white);
+  --cine-bg-2: var(--inkblot-color-neutral-white);
+  --cine-void-from: var(--inkblot-color-neutral-white);
+  --cine-void-mid: var(--inkblot-color-neutral-gray-50);
+  --cine-void-to: var(--inkblot-color-accent-citron-100);
+  --cine-ink: var(--inkblot-color-neutral-gray-900);
+  --cine-ink-dim: var(--inkblot-color-neutral-gray-600);
+  --cine-ink-faint: var(--inkblot-color-neutral-gray-500);
+  --cine-amber: var(--inkblot-color-accent-citron-700);
+  --cine-amber-bright: var(--inkblot-color-accent-citron-500);
+  --cine-amber-soft: var(--inkblot-color-accent-citron-400);
+  --cine-amber-deep: var(--inkblot-color-accent-citron-800);
+  --cine-line: rgba(29, 28, 25, 0.09);
+  --cine-line-strong: rgba(29, 28, 25, 0.22);
+  --cine-card: #ffffff;
+  --cine-card-border: rgba(29, 28, 25, 0.07);
+  --cine-scrim-strong: rgba(250, 250, 247, 0.94);
+  --cine-scrim-soft: rgba(250, 250, 247, 0.55);
+  --cine-vignette: rgba(70, 58, 28, 0.06);
+  --cine-particle: 201, 162, 39;
+  --cine-mascot-0: #ffffff;
+  --cine-mascot-1: #fbf6e8;
+  --cine-mascot-2: #f1e8cf;
+
+  color-scheme: light;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+@layer base {
+  * {
+    border-color: var(--border-subtle);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background-color: var(--cine-bg-0);
+    color: var(--cine-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: var(--inkblot-typography-font-features-default);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--inkblot-color-accent-citron-500) 22%, transparent);
+    color: var(--cine-ink);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--cine-ink);
+    text-wrap: balance;
+    letter-spacing: var(--inkblot-typography-letter-spacing-tight);
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-default);
+    border-radius: 9999px;
+    border: 2px solid var(--bg-primary);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--border-strong);
+  }
+}
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.text-cine {
+  color: var(--cine-ink);
+}
+.text-cine-dim {
+  color: var(--cine-ink-dim);
+}
+.text-cine-faint {
+  color: var(--cine-ink-faint);
+}
+
+.eyebrow-cine {
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--cine-amber);
+}
+
+.gradient-amber {
+  background: linear-gradient(
+    175deg,
+    var(--cine-amber) 0%,
+    var(--cine-amber-deep) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Component classes live in the components layer so Tailwind utilities
+   (responsive `hidden`, spacing overrides…) keep winning over them. */
+@layer components {
+/* Solid, machined card surface — hairline ring + soft diffused ambient shadow. */
+.cine-card {
+  background: var(--cine-card);
+  border: 1px solid var(--cine-card-border);
+  box-shadow:
+    0 1px 2px rgba(29, 28, 25, 0.03),
+    0 16px 40px -24px rgba(29, 28, 25, 0.12);
+}
+
+/* Double-bezel shell: wrap a .cine-card (or image) for a nested, hardware feel. */
+.bezel {
+  background: rgba(29, 28, 25, 0.035);
+  border: 1px solid rgba(29, 28, 25, 0.06);
+  border-radius: 2rem;
+  padding: 0.5rem;
+}
+.bezel > * {
+  border-radius: calc(2rem - 0.5rem);
+}
+
+/* ============================================================
+   Buttons — dark ink primary, quiet secondary. Citron is an
+   accent, never a large fill.
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 0.45s cubic-bezier(0.32, 0.72, 0, 1),
+    background-color 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+    border-color 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+    color 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn:disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: var(--cine-ink);
+  color: #fbfaf7;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 1px 2px rgba(29, 28, 25, 0.24),
+    0 12px 28px -12px rgba(29, 28, 25, 0.45);
+}
+.btn-primary:hover {
+  background: #33312b;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 1px 2px rgba(29, 28, 25, 0.24),
+    0 16px 36px -12px rgba(29, 28, 25, 0.5);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  border: 1px solid var(--cine-line);
+  color: var(--cine-ink);
+  box-shadow: 0 1px 2px rgba(29, 28, 25, 0.04);
+}
+.btn-secondary:hover {
+  border-color: var(--cine-line-strong);
+}
+
+.btn-ghost {
+  color: var(--cine-ink-dim);
+}
+.btn-ghost:hover {
+  color: var(--cine-ink);
+}
+
+/* Nested trailing-icon circle — sits flush with the button's right padding. */
+.btn-orb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.625rem;
+  height: 1.625rem;
+  border-radius: 9999px;
+  flex: none;
+  transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.btn-primary .btn-orb {
+  background: rgba(255, 255, 255, 0.14);
+}
+.btn-secondary .btn-orb {
+  background: rgba(29, 28, 25, 0.06);
+}
+.btn:hover .btn-orb {
+  transform: translateX(2px);
+}
+
+/* Eyebrow — microscopic pill badge preceding section headings. */
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(160, 125, 28, 0.25);
+  background: rgba(var(--cine-particle), 0.07);
+  padding: 0.3rem 0.85rem;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cine-amber);
+}
+} /* end @layer components */
+
+/* ============================================================
+   Reduced motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
