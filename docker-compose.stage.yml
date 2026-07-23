@@ -20,8 +20,6 @@ services:
           - citron-dashboard-stage
 
 networks:
-  default:
-    name: citron-dashboard-stage_default
   caddy:
     external: true
     name: citron-admin-api_default
